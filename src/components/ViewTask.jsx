@@ -1,25 +1,39 @@
 import TaskCard from "./TaskCard";
+import DeletedTaskCard from "./DeletedTaskCard";
 
-function ViewTask({ tasks }) {
-      const handleDelete = () => {
-      onDeleteTask();
-  };
+function ViewTask({
+  tasks,
+  onDeleteTask,
+  onTaskComplete,
+  deletedTasks,
+  onRestoreTask,
+}) {
   return (
     <div className="taskList">
-      <h3>Your Tasks</h3>
+      <h3>Task List</h3>
       {tasks.length === 0 ? (
         <p>No tasks yet. Add one above!</p>
       ) : (
-        <div classname="taskCard"><ul>
+        <ul style={{ textDecoration: "none" }}>
           {tasks.map((task) => (
-            <div style={{ display: 'inline-Block'}}>   
-            <input type="checkbox"/>
-            <TaskCard task={task}/>
-            <button onClick = {handleDelete}>delete</button>           
-            </div>
+            <li key={task.id} className="flashCard">
+              <input
+                type="checkbox"
+                checked={task.completed}
+                onChange={() => onTaskComplete(task.id)}
+              />
+              <TaskCard task={task} />
+              <button onClick={() => onDeleteTask(task.id)}>Delete</button>
+            </li>
           ))}
         </ul>
-        </div>
+      )}
+
+      {deletedTasks.length > 0 && (
+        <DeletedTaskCard
+          deletedTasks={deletedTasks}
+          onRestoreTask={onRestoreTask}
+        />
       )}
     </div>
   );

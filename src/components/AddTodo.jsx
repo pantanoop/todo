@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-function AddTodo({ onAddTask }) {  
-  const [taskText, setTaskText] = useState('');
+function AddTodo({ onAddTask }) {
+  const [taskText, setTaskText] = useState("");
 
   const handleAdd = () => {
-      onAddTask(taskText);
-      setTaskText(''); 
+    onAddTask(taskText);
+    setTaskText("");
   };
 
   return (
@@ -13,13 +13,15 @@ function AddTodo({ onAddTask }) {
       <div className="header">
         <h1>To-Do</h1>
         <p>Organise Your tasks efficiently and stay productive</p>
-        <input 
-          type="text" 
-          value={taskText} 
-          onChange={(e) => setTaskText(e.target.value)} 
-          placeholder="Enter a task..."
-        />
-        <button onClick={handleAdd}>Add Task</button>
+        <div className="inputTask">
+          <input
+            type="text"
+            value={taskText}
+            onChange={(e) => setTaskText(e.target.value)}
+            placeholder="Enter a task..."
+          />
+          <button onClick={handleAdd}>Add Task</button>
+        </div>
       </div>
     </div>
   );
