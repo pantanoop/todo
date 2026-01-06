@@ -36,7 +36,12 @@ function App() {
   // };
 
   const onDeleteTask = (taskId) => {
+    
     const taskToDelete = tasks.find((t) => t.id === taskId);
+    if (!taskToDelete.completed) {
+    alert("Complete the task before deleting it!");
+    return;
+  }
     setDeletedTasks([...deletedTasks, taskToDelete]);
     setTasks(tasks.filter((t) => t.id !== taskId));
   };
