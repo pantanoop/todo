@@ -1,5 +1,7 @@
 import TaskCard from "./TaskCard";
 import DeletedTaskCard from "./DeletedTaskCard";
+import { useState } from "react";
+import { isDisabled } from "@testing-library/user-event/dist/utils";
 
 function ViewTask({
   tasks,
@@ -8,6 +10,12 @@ function ViewTask({
   deletedTasks,
   onRestoreTask,
 }) {
+
+const [showDeleted, setShowDeleted] = useState(false);
+const handleShowDeleted = () => {
+  setShowDeleted(!showDeleted);
+};
+
   return (
     <div className="taskList">
       <h3>Task List</h3>
@@ -23,18 +31,27 @@ function ViewTask({
                 onChange={() => onTaskComplete(task.id)}
               />
               <TaskCard task={task} />
-              <button onClick={() => onDeleteTask(task.id)}>Delete</button>
+              <button onClick={() => onDeleteTask(task.id)} disabled={!task.completed ? true : false}>Delete</button>
             </li>
           ))}
         </ul>
       )}
 
-      {deletedTasks.length > 0 && (
-        <DeletedTaskCard
-          deletedTasks={deletedTasks}
-          onRestoreTask={onRestoreTask}
-        />
-      )}
+       <button onClick={handleShowDeleted}>Show deleted</button> 
+
+{
+  deletedTasks.length > 0 ? (
+    showDeleted && (
+      <DeletedTaskCard
+        deletedTasks={deletedTasks}
+        onRestoreTask={onRestoreTask}
+      />
+    )
+  ) : (
+    <p>No task found</p>
+  )
+}
+
     </div>
   );
 }

@@ -38,16 +38,14 @@ function App() {
   const onDeleteTask = (taskId) => {
     
     const taskToDelete = tasks.find((t) => t.id === taskId);
-    if (!taskToDelete.completed) {
-    alert("Complete the task before deleting it!");
-    return;
-  }
+  
     setDeletedTasks([...deletedTasks, taskToDelete]);
     setTasks(tasks.filter((t) => t.id !== taskId));
   };
 
   const onRestoreTask = (taskId) => {
     const taskToRestore = deletedTasks.find((t) => t.id === taskId);
+    taskToRestore.completed = false; 
     setTasks([...tasks, taskToRestore]);
     setDeletedTasks(deletedTasks.filter((t) => t.id !== taskId));
   };
@@ -59,6 +57,7 @@ function App() {
       )
     );
   };
+
 
   return (
     <div className="app">
